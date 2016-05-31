@@ -20,6 +20,7 @@ public class Canvas extends java.awt.Canvas {
     private int realPageIndex;
     private Page [] pages;
     private int currentPage;
+    private boolean next;
     private int realCurrentDirection;
     private final Font big = new Font("Arial",Font.PLAIN,16), medium = new Font("Arial",Font.PLAIN,14),small = new Font("Arial",Font.PLAIN,10);
     private ArrayList<Process> processes;
@@ -28,10 +29,10 @@ public class Canvas extends java.awt.Canvas {
     public Canvas(int numOfProcess, int width, int height) {
         setSize(width,height);
         quantumTanscurrido = 0;
+        next = false;
         this.numOfProcess = numOfProcess;
         bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_RGB);
         setFocusable(true);
-        requestFocus();
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -41,8 +42,8 @@ public class Canvas extends java.awt.Canvas {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    Simulation.nextStep=true;
-                }
+                    next=true;
+                 }
             }
 
             @Override
@@ -50,9 +51,16 @@ public class Canvas extends java.awt.Canvas {
 
             }
         });
+
+        requestFocus();
         buffer = (Graphics2D) bufferedImage.getGraphics();
     }
-
+    public boolean next() {
+        return next;
+    }
+    public void disNext() {
+        next = false;
+    }
     public void setQuantum(int quantum) {
         this.quantum = quantum;
     }

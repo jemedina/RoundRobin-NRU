@@ -15,14 +15,12 @@ public class Simulation extends Thread {
     private int sleepOption;
     private int currentProcess;
     private int cambiosDeContexto;
-    public static boolean nextStep = false;
     private ArrayList<Process> processes;
     public static int quantumTranscurrido = 0;
     private PrincipalMemory principalMemory;
     private Canvas viewport;
     public Simulation(int numOfProcesses, Canvas canvas, int sleepOption) {
         Random ran = new Random();
-        nextStep = false;
         this.numOfProcesses = numOfProcesses;
         this.sleepOption = sleepOption;
         principalMemory = new PrincipalMemory();
@@ -30,7 +28,6 @@ public class Simulation extends Thread {
         this.viewport = canvas;
         ran.setSeed(System.currentTimeMillis());
         quantum = 3+ran.nextInt(3);
-
         cambiosDeContexto=0;
         for(int i = 0 ; i < numOfProcesses ; i++) {
             processes.add(new Process(principalMemory));
@@ -87,10 +84,11 @@ public class Simulation extends Thread {
                 viewport.repaint();
             }
             if(sleepOption == 1) {
-                    while(true){
-                        if(nextStep) break;
-                    }
-                    nextStep = false;
+                while(true){
+                    if(viewport.next()) break;
+                    System.out.print("");
+                }
+                viewport.disNext();
             }
             try {
                 switch (sleepOption){
