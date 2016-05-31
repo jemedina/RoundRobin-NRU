@@ -80,7 +80,7 @@ public class Simulation extends Thread {
                 viewport.repaint();
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {}
             if(elapsedCycles < quantum-1 && !processEnded) {
                 elapsedCycles++;

@@ -100,7 +100,7 @@ public class Canvas extends java.awt.Canvas {
         buffer.drawString("Numero de procesos: " + numOfProcess,10,12);
         buffer.drawString("Quantum: " + quantum ,10,32);
         buffer.drawString("Ciclos transcurridos: " + quantumTanscurrido ,10,52);
-        buffer.drawString("Virtual: " + currentDirecition + " -> " + currentPage + " Fisica: " + realCurrentDirection + " -> " + realPageIndex ,10,72);
+        buffer.drawString("Virtual: " + currentDirecition + " -> " + currentPage + " Fisica: " + realPageIndex + " -> " + realCurrentDirection ,10,72);
     }
 
     private void clearBuffer() {
