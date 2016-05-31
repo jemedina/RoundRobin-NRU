@@ -3,6 +3,8 @@ package Simulation;
 import Gui.Canvas;
 import Gui.StatisticsDialog;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,20 +12,25 @@ public class Simulation extends Thread {
     private int quantum;
     private int numOfProcesses;
     private boolean processEnded;
+    private int sleepOption;
     private int currentProcess;
     private int cambiosDeContexto;
+    public static boolean nextStep = false;
     private ArrayList<Process> processes;
     public static int quantumTranscurrido = 0;
     private PrincipalMemory principalMemory;
     private Canvas viewport;
-    public Simulation(int numOfProcesses, Canvas canvas) {
+    public Simulation(int numOfProcesses, Canvas canvas, int sleepOption) {
         Random ran = new Random();
+        nextStep = false;
         this.numOfProcesses = numOfProcesses;
+        this.sleepOption = sleepOption;
         principalMemory = new PrincipalMemory();
         processes = new ArrayList<>();
         this.viewport = canvas;
         ran.setSeed(System.currentTimeMillis());
         quantum = 3+ran.nextInt(3);
+
         cambiosDeContexto=0;
         for(int i = 0 ; i < numOfProcesses ; i++) {
             processes.add(new Process(principalMemory));
@@ -79,8 +86,27 @@ public class Simulation extends Thread {
                 //printReport();
                 viewport.repaint();
             }
+            if(sleepOption == 1) {
+                    while(true){
+                        if(nextStep) break;
+                    }
+                    nextStep = false;
+            }
             try {
-                Thread.sleep(10);
+                switch (sleepOption){
+                    case 2:
+                        Thread.sleep(4000);
+                        break;
+                    case 3:
+                        Thread.sleep(1000);
+                        break;
+                    case 4:
+                        Thread.sleep(100);
+                        break;
+                    case 5:
+                        Thread.sleep(10);
+                        break;
+                }
             } catch (InterruptedException e) {}
             if(elapsedCycles < quantum-1 && !processEnded) {
                 elapsedCycles++;

@@ -2,7 +2,11 @@ package Gui;
 
 import Simulation.Page;
 import Simulation.Process;
+import Simulation.Simulation;
+
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -26,6 +30,26 @@ public class Canvas extends java.awt.Canvas {
         quantumTanscurrido = 0;
         this.numOfProcess = numOfProcess;
         bufferedImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_RGB);
+        setFocusable(true);
+        requestFocus();
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    Simulation.nextStep=true;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         buffer = (Graphics2D) bufferedImage.getGraphics();
     }
 
